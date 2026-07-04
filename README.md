@@ -57,7 +57,7 @@ train-booking-system/
    `trains` collection (only if the collection is empty).
 
 3. **Open the app:**
-   Go to [http://localhost:8080](http://localhost:8080) in your browser.
+   Go to [http://localhost:8080](http://localhost:51438) in your browser.
    The HTML/CSS/JS frontend is served directly from Spring Boot's
    `static` folder, so there's nothing else to start.
 
