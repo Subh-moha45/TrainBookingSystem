@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RailBoard — Train Ticket Booking</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== Station Marquee Header ===== -->
+  <header class="marquee">
+    <div class="marquee__inner">
+      <div class="marquee__brand">
+        <span class="marquee__dot"></span>
+        <h1>RAIL<span>BOARD</span></h1>
+      </div>
+      <nav class="marquee__nav">
+        <button class="navlink active" data-view="search">Book a Ticket</button>
+        <button class="navlink" data-view="lookup">Find My PNR</button>
+      </nav>
+    </div>
+    <div class="marquee__ticker">
+      <div class="marquee__ticker-track" id="tickerTrack">Loading live departure feed…</div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ===== SEARCH VIEW ===== -->
+    <section id="view-search" class="view active">
+
+      <div class="counter">
+        <div class="counter__glass">
+          <p class="counter__label">TICKET COUNTER</p>
+          <form id="searchForm" class="counter__form">
+            <div class="field">
+              <label for="source">From</label>
+              <input list="stationsList" id="source" name="source" placeholder="e.g. Delhi" required>
+            </div>
+            <div class="field field--swap">
+              <button type="button" id="swapBtn" title="Swap stations">⇄</button>
+            </div>
+            <div class="field">
+              <label for="destination">To</label>
+              <input list="stationsList" id="destination" name="destination" placeholder="e.g. Mumbai" required>
+            </div>
+            <datalist id="stationsList"></datalist>
+            <div class="field">
+              <label for="journeyDate">Date of journey</label>
+              <input type="date" id="journeyDate" name="journeyDate" required>
+            </div>
+            <button type="submit" class="btn btn--primary">Search Trains</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="searchStatus" class="status-msg"></div>
+
+      <!-- Departure board results -->
+      <div id="board" class="board hidden">
+        <div class="board__head">
+          <span>Train</span>
+          <span>From → To</span>
+          <span>Departs</span>
+          <span>Arrives</span>
+          <span>Duration</span>
+          <span>Fare</span>
+          <span>Seats</span>
+          <span></span>
+        </div>
+        <div id="boardRows" class="board__rows"></div>
+      </div>
+
+    </section>
+
+    <!-- ===== PNR LOOKUP VIEW ===== -->
+    <section id="view-lookup" class="view">
+      <div class="counter">
+        <div class="counter__glass">
+          <p class="counter__label">RETRIEVE BOOKING</p>
+          <form id="pnrForm" class="counter__form counter__form--single">
+            <div class="field">
+              <label for="pnrInput">PNR number</label>
+              <input type="text" id="pnrInput" placeholder="e.g. PNR4F82A1C" required>
+            </div>
+            <button type="submit" class="btn btn--primary">Find Ticket</button>
+          </form>
+          <p class="counter__hint">or look up by email:</p>
+          <form id="emailForm" class="counter__form counter__form--single">
+            <div class="field">
+              <label for="emailInput">Email used at booking</label>
+              <input type="email" id="emailInput" placeholder="you@example.com" required>
+            </div>
+            <button type="submit" class="btn btn--ghost">Show My Bookings</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="lookupResults" class="ticket-stack"></div>
+    </section>
+
+  </main>
+
+  <!-- ===== BOOKING MODAL ===== -->
+  <div id="bookingModal" class="modal-overlay hidden">
+    <div class="modal">
+      <button class="modal__close" id="closeModal">&times;</button>
+      <h2 class="modal__title">Passenger Details</h2>
+      <p class="modal__subtitle" id="modalTrainInfo"></p>
+
+      <form id="bookingForm">
+        <div class="field">
+          <label for="bookerName">Your name</label>
+          <input type="text" id="bookerName" required>
+        </div>
+        <div class="field">
+          <label for="bookerEmail">Your email</label>
+          <input type="email" id="bookerEmail" required>
+        </div>
+
+        <div class="field">
+          <label for="seatCount">Number of passengers</label>
+          <input type="number" id="seatCount" min="1" max="6" value="1" required>
+        </div>
+
+        <div id="passengerFields" class="passenger-fields"></div>
+
+        <div class="modal__summary">
+          <span>Total fare</span>
+          <strong id="totalFareDisplay">₹0</strong>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">Confirm & Book</button>
+        <p id="bookingError" class="error-msg"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
